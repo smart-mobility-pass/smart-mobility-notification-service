@@ -40,7 +40,7 @@ public class Notification {
     private String message;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "notification_status", nullable = false)
     private NotificationStatus status;
 
     @Column(name = "error_reason", columnDefinition = "TEXT")
