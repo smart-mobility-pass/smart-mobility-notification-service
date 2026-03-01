@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record AccountCreditedEvent(
-        Long userId,
-        BigDecimal amount,
-        LocalDateTime timestamp) {
+                String userId,
+                BigDecimal amount,
+                LocalDateTime timestamp) {
 }
