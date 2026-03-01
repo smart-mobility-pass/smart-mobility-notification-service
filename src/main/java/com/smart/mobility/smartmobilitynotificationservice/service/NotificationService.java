@@ -28,9 +28,10 @@ public class NotificationService {
     public void processPaymentEvent(PaymentEvent event) {
         String idempotencyKey = "PAYMENT_" + event.tripId() + "_" + event.status();
 
-        if (inProccess(idempotencyKey)) return;
+        if (inProccess(idempotencyKey))
+            return;
 
-        String message = "SUCCESS".equalsIgnoreCase(event.status())
+        String message = ("SUCCESS".equalsIgnoreCase(event.status()) || "COMPLETED".equalsIgnoreCase(event.status()))
                 ? String.format("Paiement r\u00E9ussi : %s F CFA pour votre trajet.", event.amount())
                 : String.format("Paiement refus\u00E9 : %s.",
                         event.reason() != null ? event.reason() : "Erreur inconnue");
@@ -53,7 +54,8 @@ public class NotificationService {
     public void processAccountCreditedEvent(AccountCreditedEvent event) {
         String idempotencyKey = "TOP_UP_" + event.userId() + "_" + event.timestamp().toString();
 
-        if (inProccess(idempotencyKey)) return;
+        if (inProccess(idempotencyKey))
+            return;
 
         String message = String.format("Votre compte a \u00E9t\u00E9 cr\u00E9dit\u00E9 de %s F CFA.", event.amount());
 
