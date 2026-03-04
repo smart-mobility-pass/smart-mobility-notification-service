@@ -31,10 +31,17 @@ public class NotificationService {
         if (inProccess(idempotencyKey))
             return;
 
-        String message = ("SUCCESS".equalsIgnoreCase(event.status()) || "COMPLETED".equalsIgnoreCase(event.status()))
-                ? String.format("Paiement r\u00E9ussi : %s F CFA pour votre trajet.", event.amount())
-                : String.format("Paiement refus\u00E9 : %s.",
-                        event.reason() != null ? event.reason() : "Erreur inconnue");
+        String message;
+        if (event.penalty()) {
+            message = String.format(
+                    "Trajet cl\u00F4tur\u00E9 avec erreur (Ligne incorrecte) - Forfait maximum appliqu\u00E9 : %s F CFA.",
+                    event.amount());
+        } else {
+            message = ("SUCCESS".equalsIgnoreCase(event.status()) || "COMPLETED".equalsIgnoreCase(event.status()))
+                    ? String.format("Paiement r\u00E9ussi : %s F CFA pour votre trajet.", event.amount())
+                    : String.format("Paiement refus\u00E9 : %s.",
+                            event.reason() != null ? event.reason() : "Erreur inconnue");
+        }
 
         Notification notification = Notification.builder()
                 .userId(event.userId())

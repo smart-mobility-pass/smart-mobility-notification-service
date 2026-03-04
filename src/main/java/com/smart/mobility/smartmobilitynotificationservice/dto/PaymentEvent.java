@@ -4,10 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record PaymentEvent(
-                String tripId,
-                String userId,
-                BigDecimal amount,
-                String status,
-                String reason,
-                LocalDateTime timestamp) {
+        String tripId,
+        String userId,
+        BigDecimal amount,
+        String status,
+        String reason,
+        LocalDateTime timestamp,
+        boolean penalty) {
 }
