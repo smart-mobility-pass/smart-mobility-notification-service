@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -23,6 +25,11 @@ public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserServiceClient userServiceClient;
     private final EmailService emailService;
+
+    public List<Notification> getNotificationsByUserId(String userId) {
+        log.info("Fetching notifications for userId={}", userId);
+        return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    }
 
     @Transactional
     public void processPaymentEvent(PaymentEvent event) {
